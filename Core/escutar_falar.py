@@ -15,7 +15,6 @@ def cria_audio(texto):
         print("Estou aprendendo o que você disse...")
         tts = gTTS(texto, lang='pt-br', lang_check=False)
         tts.save(f'audios/{nome_arq}.mp3')
-    # Da play ao audio
     playsound(f'audios/{nome_arq}.mp3')
 
 
