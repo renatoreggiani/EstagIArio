@@ -37,14 +37,10 @@ def ouvir_microfone():
 
 
 ##
-
 if __name__ == '__main__':
     dados = json.load(open('tarefas/dict_tarefas.json', encoding='utf8'))
     frase = ouvir_microfone()
     cria_audio(frase)
-
     print(frase)
 
-
-##
 
