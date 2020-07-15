@@ -5,7 +5,6 @@ from playsound import playsound
 from unicodedata import normalize
 import os
 
-
 ##
 def cria_audio(texto):
     """Cria o audio utilizado TTS do google translator"""
@@ -43,4 +42,6 @@ if __name__ == '__main__':
     cria_audio(frase)
     print(frase)
 
+
+##
 

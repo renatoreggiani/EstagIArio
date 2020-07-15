@@ -3,7 +3,7 @@ import spacy
 nlp = spacy.load('pt_core_news_sm')
 ##
 
-f1 = nlp(u'estagiário, mapeia o limite!')
+f1 = nlp(u'estagiário mapear o limite do dia 20 de janeiro')
 f2 = nlp(u'estagiário mapear o limite')
 f3 = nlp(u'estagiário mapeamento do limite')
 f4 = nlp(u'estagiário mapear limites')
@@ -34,4 +34,22 @@ f4_cmd = ' '.join([palavra.lemma_ for palavra in f4 if palavra.is_alpha and (pal
 ## #Tenta descobrir o nivel de similaridade
 nlp(f1_cmd).similarity(nlp(f4_cmd))
 
-nlp(nlp(nlp(f1_cmd)[0].lemma_)[0].lemma_)[0].lemma_
+
+##
+f1 = nlp(u'estagiário mapear o limite do dia vinte de janeiro')
+[palavra.dep_ for palavra in f1 if palavra]
+
+doc = nlp(u'estagiário mapeia o limites e liquidez dia quinze de janeiro')
+bi = bigram(doc)
+
+i_acao = [palavra.i for palavra in f1 if palavra.dep_ == 'ROOT']
+i_obj = [palavra.i for palavra in f1[i_acao[0]].rights]
+
+tarefa = '_'.join(
+    doc[i_acao[0]].lemma_
+    ,
+    doc[i_obj[0]].tag_
+)
+
+print(spacy.explain(doc[i_obj[0]].tag_))
+##
