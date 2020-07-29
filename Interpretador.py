@@ -43,7 +43,7 @@ def date_getter(doc):
                }
 
     if any(matches.values()):
-        print('achei data')
+        print('frase possui data')
 
         if matches['mes']:
             for match_id, start, end in matches['mes']:
@@ -65,9 +65,11 @@ def date_getter(doc):
                 dt = date.today() - timedelta(days=d_ref_num -1)
                 return dt
 
+    else:
+        print('frase não possui data')
 
 ##
-Doc.set_extension("get_date", getter=date_getter)
+Doc.set_extension("get_date", getter=date_getter, force=True)
 
 
 ##
@@ -89,5 +91,8 @@ def identifica_comando(frase):
 
 ## teste
 
-identifica_comando('amanhã vou no cinema')
+# identifica_comando('amanhã vou no cinema')
+
+
+##
 
