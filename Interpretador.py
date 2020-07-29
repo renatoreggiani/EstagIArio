@@ -38,8 +38,8 @@ def date_getter(doc):
     matcher_d_ref.add('HOJE_PATTERN', None, [{"ORTH": {"IN": d_ref}}])
 
     matches = {'mes': matcher_mes(doc),
-               'palav_chave': matcher_palav_chave(doc),
-               'd_ref': matcher_d_ref(doc)
+               'd_ref': matcher_d_ref(doc),
+               'palav_chave': matcher_palav_chave(doc)
                }
 
     if any(matches.values()):
@@ -65,6 +65,12 @@ def date_getter(doc):
                 dt = date.today() - timedelta(days=d_ref_num -1)
                 return dt
 
+        if matches['palav_chave']:
+            dt = date(ano if ano else date.today().year,
+                      mes_num date.today().month,
+                      dia if dia else 1)
+
+
     else:
         print('frase não possui data')
 
@@ -74,14 +80,14 @@ Doc.set_extension("get_date", getter=date_getter, force=True)
 
 ##
 def identifica_comando(frase):
-    # stemmer = RSLPStemmer()  # usado para pegar o radical da palavra
+    stemmer = RSLPStemmer()  # usado para pegar o radical da palavra
     doc = nlp(frase)
     dic_cmd = {}
-    # dic_cmd = {'index_acao':[palavra.i for palavra in doc if palavra.dep_ == 'ROOT']}
-    # dic_cmd['acao'] = doc[dic_cmd['index_acao']].orth_
-    # dic_cmd['comp_acao'] = [palavra.orth_ for palavra in doc[dic_cmd['index_acao']].rights]
-    # cmd = '_'.join([stemmer.stem(dic_cmd['acao']),
-    #                 stemmer.stem(dic_cmd['comp_acao'])])
+    dic_cmd = {'index_acao':[palavra.i for palavra in doc if palavra.dep_ == 'ROOT']}
+    dic_cmd['acao'] = doc[dic_cmd['index_acao']].orth_
+    dic_cmd['comp_acao'] = [palavra.orth_ for palavra in doc[dic_cmd['index_acao']].rights]
+    cmd = '_'.join([stemmer.stem(dic_cmd['acao']),
+                    stemmer.stem(dic_cmd['comp_acao'])])
 
     dt = doc._.get_date
     if type(dt) == date:
