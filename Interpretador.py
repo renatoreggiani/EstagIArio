@@ -14,7 +14,7 @@ def remove_stopwords(doc, manter=[]):
     Parametros:
     manter: mantem as palavras passadas mesmo que esta seja stopword
     """
-    doc_sem_stopwords = [p.orth_ for p in doc if (not any([p.is_stop,p.is_punct]) or p.orth_ in manter)]
+    doc_sem_stopwords = [p.orth_ for p in doc if (not any([p.is_stop, p.is_punct]) or p.orth_ in manter)]
     doc_sem_stopwords = nlp(' '.join(doc_sem_stopwords))
     return doc_sem_stopwords
 
@@ -59,7 +59,7 @@ def date_getter(doc):
             for match_id, start, end in matches['d_ref']:
                 match = doc[start:end].orth_
                 d_ref_num = d_ref.index(match)
-                dt = date.today() - timedelta(days=d_ref_num -1)
+                dt = date.today() - timedelta(days=d_ref_num-1)
                 return dt
 
         if matches['palav_chave']:
@@ -75,6 +75,7 @@ def date_getter(doc):
 
     else:
         print('frase não possui data')
+
 
 ##
 Doc.set_extension("get_date", getter=date_getter, force=True)
