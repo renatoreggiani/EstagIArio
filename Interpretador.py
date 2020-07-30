@@ -101,11 +101,3 @@ def identifica_comando(frase):
         dic_cmd['date'] = dt
 
     return dic_cmd
-
-## teste
-
-# identifica_comando('amanhã vou no cinema')
-
-
-##
-
