@@ -30,7 +30,7 @@ class ComunicacaoEstagiario(object):
         tts.save('/home/moss/IA/teste.mp3')
         print("sim mestre")
         #Da play ao audio
-        playsound('/home/moss/IA/teste.mp3')
+        #playsound('/home/moss/IA/teste.mp3')
 
     
     def ouvir_microfone():
@@ -41,7 +41,7 @@ class ComunicacaoEstagiario(object):
             print("Diga alguma coisa: ")
             #microfone.pause_threshold = 0.8
             audio = microfone.listen(source,timeout=None)  # Armazena a informacao de audio na variavel
-            
+            print("nao pegou audio")
         try:
             texto = microfone.recognize_google(audio, language='pt-BR')  # Transforma audio em texto
             print("Você disse: " + texto)
