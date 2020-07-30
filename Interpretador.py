@@ -43,15 +43,12 @@ def date_getter(doc):
                }
 
     if any(matches.values()):
-        print('frase possui data')
-
         if matches['mes']:
             for match_id, start, end in matches['mes']:
                 mes_nome = doc[start:end].orth_
                 mes_num = meses.index(mes_nome) + 1
                 index_mes = [p.orth_ for p in doc].index(mes_nome)
                 dia = next(iter([int(p.orth_) for p in doc[index_mes].lefts if p.is_digit]), False)
-                print(dia)
                 ano = next(iter([int(p.orth_) for p in doc[index_mes].rights if p.is_digit]), False)
                 dt = date(ano if ano else date.today().year,
                           mes_num,
@@ -66,10 +63,15 @@ def date_getter(doc):
                 return dt
 
         if matches['palav_chave']:
-            dt = date(ano if ano else date.today().year,
-                      mes_num date.today().month,
-                      dia if dia else 1)
-
+            dict_palav = {'dia': None, 'mês': None, 'ano': None}
+            for match_id, start, end in matches['palav_chave']:
+                index_palav = [p.orth_ for p in doc].index(doc[start:end].orth_)
+                num = doc[index_palav].nbor().orth_ if doc[index_palav].nbor().is_digit else None
+                dict_palav[doc[start:end].orth_] = int(num)
+            dt = date(dict_palav['ano'] if dict_palav['ano'] else date.today().year,
+                      dict_palav['mês'] if dict_palav['mês'] else date.today().month,
+                      dict_palav['dia'] if dict_palav['dia'] else 1)
+            return dt
 
     else:
         print('frase não possui data')
@@ -83,11 +85,16 @@ def identifica_comando(frase):
     stemmer = RSLPStemmer()  # usado para pegar o radical da palavra
     doc = nlp(frase)
     dic_cmd = {}
-    dic_cmd = {'index_acao':[palavra.i for palavra in doc if palavra.dep_ == 'ROOT']}
-    dic_cmd['acao'] = doc[dic_cmd['index_acao']].orth_
-    dic_cmd['comp_acao'] = [palavra.orth_ for palavra in doc[dic_cmd['index_acao']].rights]
-    cmd = '_'.join([stemmer.stem(dic_cmd['acao']),
-                    stemmer.stem(dic_cmd['comp_acao'])])
+    index_root = next(iter([palavra.i for palavra in doc if palavra.dep_ == 'ROOT']), False)
+
+    if type(index_root) == int:
+        print('entrou')
+        dic_cmd['acao'] = doc[index_root].orth_
+        dic_cmd['acao_rad'] = stemmer.stem(dic_cmd['acao'])
+        complemento = next(iter([palavra.orth_ for palavra in doc[index_root].rights]), False)
+        if complemento:
+            dic_cmd['complem'] = complemento
+            dic_cmd['complem_rad'] = stemmer.stem(complemento)
 
     dt = doc._.get_date
     if type(dt) == date:
