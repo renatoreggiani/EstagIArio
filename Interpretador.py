@@ -14,7 +14,7 @@ def remove_stopwords(doc, manter=[]):
     Parametros:
     manter: mantem as palavras passadas mesmo que esta seja stopword
     """
-    doc_sem_stopwords = [p.orth_ for p in doc if (not any([p.is_stop, p.is_punct]) or p.orth_ in manter)]
+    doc_sem_stopwords = [p.orth_ for p in doc if (not any([p.is_stop,p.is_punct]) or p.orth_ in manter)]
     doc_sem_stopwords = nlp(' '.join(doc_sem_stopwords))
     return doc_sem_stopwords
 
@@ -59,7 +59,7 @@ def date_getter(doc):
             for match_id, start, end in matches['d_ref']:
                 match = doc[start:end].orth_
                 d_ref_num = d_ref.index(match)
-                dt = date.today() - timedelta(days=d_ref_num-1)
+                dt = date.today() - timedelta(days=d_ref_num -1)
                 return dt
 
         if matches['palav_chave']:
@@ -73,9 +73,8 @@ def date_getter(doc):
                       dict_palav['dia'] if dict_palav['dia'] else 1)
             return dt
 
-    else:
-        print('frase não possui data')
-
+    #else:    
+	#print('frase não possui data')
 
 ##
 Doc.set_extension("get_date", getter=date_getter, force=True)
@@ -89,7 +88,7 @@ def identifica_comando(frase):
     index_root = next(iter([palavra.i for palavra in doc if palavra.dep_ == 'ROOT']), False)
 
     if type(index_root) == int:
-        print('entrou')
+        #print('entrou')
         dic_cmd['acao'] = doc[index_root].orth_
         dic_cmd['acao_rad'] = stemmer.stem(dic_cmd['acao'])
         complemento = next(iter([palavra.orth_ for palavra in doc[index_root].rights]), False)
