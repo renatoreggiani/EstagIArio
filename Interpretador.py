@@ -4,7 +4,6 @@ from spacy.tokens import Doc
 from spacy.matcher import Matcher
 from datetime import date, timedelta
 
-
 nlp = spacy.load('pt_core_news_sm')
 
 
@@ -26,7 +25,7 @@ def date_getter(doc):
              "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"]
     palav_chave = ['dia', 'mês', 'ano']
     d_ref = ['amanhã', 'hoje', 'ontem', 'anteontem']
-    doc = remove_stopwords(doc, manter=meses+palav_chave+d_ref)
+    doc = remove_stopwords(doc, manter=meses + palav_chave + d_ref)
     matcher_mes = Matcher(nlp.vocab)
     pattern_meses = [{"ORTH": {"IN": meses}}]
     matcher_mes.add('MESES_PATTERN', None, pattern_meses)
@@ -59,7 +58,7 @@ def date_getter(doc):
             for match_id, start, end in matches['d_ref']:
                 match = doc[start:end].orth_
                 d_ref_num = d_ref.index(match)
-                dt = date.today() - timedelta(days=d_ref_num-1)
+                dt = date.today() - timedelta(days=d_ref_num - 1)
                 return dt
 
         if matches['palav_chave']:
@@ -73,8 +72,10 @@ def date_getter(doc):
                       dict_palav['dia'] if dict_palav['dia'] else 1)
             return dt
 
-    #else:    
-	#print('frase não possui data')
+    # else:
+
+
+#   print('frase não possui data')
 
 
 ##
@@ -89,7 +90,7 @@ def identifica_comando(frase):
     index_root = next(iter([palavra.i for palavra in doc if palavra.dep_ == 'ROOT']), False)
 
     if type(index_root) == int:
-        #print('entrou')
+        # print('entrou')
         dic_cmd['acao'] = doc[index_root].orth_
         dic_cmd['acao_rad'] = stemmer.stem(dic_cmd['acao'])
         complemento = next(iter([palavra.orth_ for palavra in doc[index_root].rights]), False)
