@@ -5,13 +5,14 @@
 
 
 #@autor Gustavo Moss /Renato Regianne
-import speech_recognition as sr
-from gtts import gTTS
-from unicodedata import normalize
-from playsound import playsound
+
+import speech_recognition as sr #reconhecimento de voz
+from gtts import gTTS #voz do estagiario
+from unicodedata import normalize #voz do estagiario
+from playsound import playsound #voz do estagiario
 import os
 import sys
-from diretorio.comandos import *
+from comandos import * #comandos do estagiario
 import spacy
 from nltk import RSLPStemmer
 from abc import ABCMeta, abstractmethod
@@ -24,7 +25,7 @@ from Interpretador import *
 
 class ComunicacaoEstagiario(object):
     
-    def cria_audio(audio):
+    def falar(audio):
         tts = gTTS(audio,lang='pt-br')
         #Salva o arquivo de audio
         tts.save('/home/moss/IA/teste.mp3')
@@ -33,15 +34,16 @@ class ComunicacaoEstagiario(object):
         #playsound('/home/moss/IA/teste.mp3')
 
     
-    def ouvir_microfone():
+    def ouvir(self):
         """Funcao responsavel por ouvir e reconhecer a fala"""
         microfone = sr.Recognizer()  # Habilita o microfone para ouvir o usuario
         with sr.Microphone() as source:
             microfone.adjust_for_ambient_noise(source)  # Chama a funcao de reducao de ruido
             print("Diga alguma coisa: ")
             #microfone.pause_threshold = 0.8
-            audio = microfone.listen(source,timeout=None)  # Armazena a informacao de audio na variavel
-            print("nao pegou audio")
+            audio = microfone.listen(source)  # Armazena a informacao de audio na variavel
+#             if audio == None:
+#                 self.ouvir()
         try:
             texto = microfone.recognize_google(audio, language='pt-BR')  # Transforma audio em texto
             print("Você disse: " + texto)
@@ -79,7 +81,6 @@ class ComandosEstagiario(object):
         def _executaComando(self,voz):
             comando=ComandosEstagiario.__identificaComando(voz)
             comando=comando['acao_rad']+'_'+comando['complem_rad']
-            print(comando)
             if self.__selecionaComando(comando):
                 return eval(f'{comando}()')     
             else:
@@ -92,7 +93,7 @@ class ComandosEstagiario(object):
     
 
 
-# In[8]:
+# In[4]:
 
 
 class Estagiario(ComandosEstagiario,ComunicacaoEstagiario):
@@ -105,11 +106,13 @@ class Estagiario(ComandosEstagiario,ComunicacaoEstagiario):
         frase =frase.capitalize().strip()
         if frase =='Estagiario':
             self._status="ACTIVATED"
-        elif self._status == 'DISABLED':
+        else:
             print('estou dormindo')
-            #frase=self.ouvir_microfone()
-            frase=input('comando:')
-            self.activatedEstagiario(frase)       
+            frase=self.ouvir_microfone()
+            #frase=input('comando:')
+            self.activatedEstagiario(frase)
+     #funcao de fala
+        print('Olá mestre...')
          
     
     def _manipulaListaDeComandos(self):
@@ -122,20 +125,27 @@ class Estagiario(ComandosEstagiario,ComunicacaoEstagiario):
         return self._listaDeComandos
         
     def interface(self):
-        #frase=self.ouvir_microfone() #automatizado 
-        frase=input('comando:')#manual para testes
+        frase=self.ouvir() #automatizado 
+        #frase=input('comando:')#manual para testes
         self.activatedEstagiario(frase)
-        #frase=self.ouvir_microfone() #automatizado 
-        frase=input('comando:')#manual para testes
+        frase=self.ouvir() #automatizado 
+        #frase=input('comando:')#manual para testes
         print(self._executaComando(frase))
+        self._status='DISABLED'
         self.interface()
 
 
-# In[9]:
+# In[5]:
 
 
 if __name__ == '__main__':
     e=Estagiario()
 
     e.interface()
+
+
+# In[ ]:
+
+
+
 
