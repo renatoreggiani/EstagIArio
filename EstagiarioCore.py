@@ -77,9 +77,9 @@ class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
         self.microfone = microfone
 
     def ativar_estagiario(self):
-        frase = self.ouvir_microfone('Chame o Estagiário para começar') if self.microfone else input('Chamar: ')
+        frase = self.ouvir_microfone('Chame o Estagiário para começar') if self.microfone else input('\nChamar: ')
         if 'estagiário' in frase:
-            frase = self.ouvir_microfone('Oque devo fazer?') if self.microfone else input('Oque deve fazer: ')
+            frase = self.ouvir_microfone('Oque devo fazer?') if self.microfone else input('\nOque deve fazer: ')
             print(self._executa_comando(frase))
         else:
             print('estou dormindo', ' ' * 20, end='\r', flush=True)
@@ -102,5 +102,7 @@ class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
 ##
 if __name__ == '__main__':
     print('Iniciando estagiário')
-    e = Estagiario(microfone=False)
+    e = Estagiario(microfone=True)
     e.interface()
+##
+
