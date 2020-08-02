@@ -9,9 +9,10 @@ nlp = spacy.load('pt_core_news_sm')
 
 ##
 def remove_stopwords(doc, manter=[]):
-    """Remove stopwords da sentenca, stopwords podem ser consultadas com spacy.lang.pt.stop_words.STOP_WORDS
+    """Remove stopwords da sentenca, lista das stopwords podem ser consultadas com comando
+    spacy.lang.pt.stop_words.STOP_WORDS
     Parametros:
-    manter: mantem as palavras passadas mesmo que esta seja stopword
+    manter: mantem a(s) palavra(s) mesmo estando na lista de stopword
     """
     doc_sem_stopwords = [p.orth_ for p in doc if (not any([p.is_stop, p.is_punct]) or p.orth_ in manter)]
     doc_sem_stopwords = nlp(' '.join(doc_sem_stopwords))
@@ -20,7 +21,7 @@ def remove_stopwords(doc, manter=[]):
 
 ## dbt tec transformar numeros por extenso em numero antes de remover stopwords
 def date_getter(doc):
-    """Transforma data no texto em obj datetime.date,"""
+    """Transforma data no texto em obj datetime.date, numeros devem ser passados no formato numerico"""
     meses = ["janeiro", "fevereiro", "março", "abril", "maio", "junho",
              "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"]
     palav_chave = ['dia', 'mês', 'ano']
@@ -71,11 +72,6 @@ def date_getter(doc):
                       dict_palav['mês'] if dict_palav['mês'] else date.today().month,
                       dict_palav['dia'] if dict_palav['dia'] else 1)
             return dt
-
-    # else:
-
-
-#   print('frase não possui data')
 
 
 ##
