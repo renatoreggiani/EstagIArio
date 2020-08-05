@@ -47,7 +47,7 @@ class ComandosEstagiario(object):
     #         a lista de comandos para poder ser manipulada,
     #         funcao privada
     def __manipulaListaDeComandos():
-        with open('comandos.py', 'r') as arquivo:
+        with open('habilidades.py', 'r') as arquivo:
             linhas = arquivo.readlines()
         lista = eval(linhas[0])
         return lista

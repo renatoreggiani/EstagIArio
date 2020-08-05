@@ -2,9 +2,9 @@
 import speech_recognition as sr
 from gtts import gTTS
 from playsound import playsound
-from diretorio.comandos import *
+import diretorio.habilidades as hab
 from abc import ABCMeta, abstractmethod
-from Interpretador import *
+from Interpretador import identifica_comando
 
 
 ##
@@ -60,11 +60,11 @@ class ComandosEstagiario(object):
             comando = comando['acao_rad'] + '_' + comando['complem_rad']
             print(comando)
             if self.__seleciona_comando(comando):
-                return eval(f'{comando}()')
+                return eval(f'hab.{comando}()')
             else:
                 # vai ter uma funcao pra ele falar(audio)
                 print('desculpe mestre eu nao sei fazer isso,sei fazer apenas isso:\n')
-                return list_com()
+                return hab.list_com()
         except KeyError:
             print(KeyError)
 
@@ -76,14 +76,18 @@ class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
         self._lista_de_comandos = self._manipula_lista_de_comandos()
         self.microfone = microfone
 
-    def ativar_estagiario(self):
-        frase = self.ouvir_microfone('Chame o Estagiário para começar') if self.microfone else input('\nChamar: ')
+    def interface(self):
+        frase = self.ouvir_microfone('Chame o Estagiário para começar') if self.microfone\
+                else input('\nChamar: ')
         if 'estagiário' in frase:
-            frase = self.ouvir_microfone('Oque devo fazer?') if self.microfone else input('\nOque deve fazer: ')
+            frase = self.ouvir_microfone('Oque devo fazer?') if self.microfone\
+                    else input('\nOque deve fazer: ')
+            print(frase)
             print(self._executa_comando(frase))
+            self.interface()
         else:
             print('estou dormindo', ' ' * 20, end='\r', flush=True)
-            self.ativar_estagiario()
+            self.interface()
 
     def _manipula_lista_de_comandos(self):
         with open('listaDeComandos.txt', 'r') as arquivo:
@@ -94,15 +98,9 @@ class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
     def lista_de_comandos(self):
         return self._lista_de_comandos
 
-    def interface(self):
-        self.ativar_estagiario()
-        self.interface()
-
 
 ##
 if __name__ == '__main__':
     print('Iniciando estagiário')
-    e = Estagiario(microfone=True)
+    e = Estagiario(microfone=False)
     e.interface()
-##
-
