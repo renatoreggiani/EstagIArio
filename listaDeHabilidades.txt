@@ -2,6 +2,6 @@
 'subtra_cont':'subtrair conta  - subtrai dois numeros',
 'abr_sit':'abrir site - abre um site',
 'final_sistem':'finalizar sistema - finaliza o estagiario',
-'list_com':'lista de comandos - exibi lista de comandos'
+'list_com':'lista de comandos - exibi lista de comandos',
 'abr_youtube':'abrir youtube'
 }
