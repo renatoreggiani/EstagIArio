@@ -90,7 +90,7 @@ class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
             self.interface()
 
     def _manipula_lista_de_comandos(self):
-        with open('listaDeComandos.txt', 'r') as arquivo:
+        with open('listaDeHabilidades.txt', 'r') as arquivo:
             dic = arquivo.read()
             dic = eval(dic)
         return dic

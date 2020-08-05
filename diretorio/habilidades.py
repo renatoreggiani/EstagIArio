@@ -19,7 +19,7 @@ def final_sistem():
     return sys.exit()
     
 def list_com():
-    with open('listaDeComandos.txt','r') as arquivo:
+    with open('listaDeHabilidades.txt','r') as arquivo:
         dic=arquivo.read()
         dic=eval(dic)
 
