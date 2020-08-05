@@ -10,7 +10,7 @@ def abr_sit():
     from webbrowser import open
     return open("https://www.google.com",new=2)
 
-def abr_youtube():
+def abr_youtub():
     from webbrowser import open
     return open("https://www.youtube.com",new=2)
 
