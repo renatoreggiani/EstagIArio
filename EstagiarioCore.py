@@ -120,25 +120,7 @@ if __name__ == '__main__':
     e.interface()
 
 
-# In[ ]:
 
-
-
-
-
-# In[ ]:
-
-
-identifica_comando('abrir site')
-
-
-# In[ ]:
-
-
-e.abr_sit()
-
-
-# In[ ]:
 
 
 
