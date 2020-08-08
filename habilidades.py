@@ -2,13 +2,11 @@ def som_cont():
     x=1+1
     return x
 
-def subtra_cont():
-    x=2-3 
-    return x
-
-def abr_sit():
-    from webbrowser import open
-    return open("https://www.google.com",new=2)
+def faz_pesquis():
+    from wikipedia import set_lang,summary
+    wk.set_lang('pt')
+    info=input('Oque desejas pesquisar mestre?\n')
+    return wk.summary(info,sentences=2)
 
 def abr_sit():
     from webbrowser import open
