@@ -16,13 +16,15 @@ def abr_sit():
 def final_sistem():
     import sys
     return sys.exit()
-    
+
 def list_com():
+    '''Exibi '''
     with open('listaDeHabilidades.txt','r') as arquivo:
         dic=arquivo.read()
         dic=eval(dic)
 
-    for valores in dic.values():
-        key=valores.index('-')
-        print('comando:'+valores[:key].rstrip().strip()+"\n"+'funcao:'+valores[key+1:].rstrip().strip()+"\n")
+    for valor in dic.values():
+        desc = valor.split('-')
+        print(f'Comando: {desc[0]}\n - descrição:{desc[1]}')
+#%%
 

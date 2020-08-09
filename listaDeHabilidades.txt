@@ -1,7 +1,7 @@
 {'som_cont':'somar conta - soma dois numeros',
-'faz_pesquis':'pesquisa oque voce quer',
+'faz_pesquis':'pesquisa - oque voce quer',
 'abr_sit':'abrir site - abre um site',
 'final_sistem':'finalizar sistema - finaliza o estagiario',
 'list_com':'lista de comandos - exibi lista de comandos',
-'abr_sit':'abrir sites'
+'abr_sit':'abrir - sites'
 }

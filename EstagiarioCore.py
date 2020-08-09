@@ -9,7 +9,7 @@ from abc import ABCMeta, abstractmethod
 from Interpretador import identifica_comando
 
 
-# %%
+#%%
 
 class ComunicacaoEstagiario(object):
 
@@ -38,7 +38,7 @@ class ComunicacaoEstagiario(object):
             return "Não entendi"
 
 
-# %%
+#%%
 
 class ComandosEstagiario(object):
     __metaclass__ = ABCMeta
@@ -71,7 +71,7 @@ class ComandosEstagiario(object):
             print(KeyError)
 
 
-# %%
+#%%
 
 class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
 
@@ -103,13 +103,13 @@ class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
         return self._lista_de_comandos
 
 
-# %%
+#%%
 
 if __name__ == '__main__':
     print('Iniciando estagiário')
     e = Estagiario(microfone=True)
     e.interface()
 
-# %%
+#%%
 
 
