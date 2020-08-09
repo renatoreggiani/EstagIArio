@@ -1,8 +1,4 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
+# %%
 
 # @autor Gustavo Moss /Renato Regianne
 import speech_recognition as sr
@@ -13,8 +9,7 @@ from abc import ABCMeta, abstractmethod
 from Interpretador import identifica_comando
 
 
-# In[2]:
-
+# %%
 
 class ComunicacaoEstagiario(object):
 
@@ -26,14 +21,13 @@ class ComunicacaoEstagiario(object):
         # Da play ao audio
         playsound('/home/moss/IA/teste.mp3')  # corrigir
 
-    
-    def ouvir_microfone(self,texto_de_espera):
+    def ouvir_microfone(self, texto_de_espera):
         """Funcao responsavel por ouvir e reconhecer a fala"""
         microfone = sr.Recognizer()  # Habilita o microfone para ouvir o usuario
         with sr.Microphone() as source:
             microfone.adjust_for_ambient_noise(source)  # Chama a funcao de reducao de ruido
             print(texto_de_espera, ' ' * 20, end='\r', flush=True)
-            # microfone.pause_threshold = 0.8
+            microfone.pause_threshold = 2.5
             audio = microfone.listen(source, timeout=None)  # Armazena a informacao de audio na variavel
         try:
             texto = microfone.recognize_google(audio, language='pt-BR')  # Transforma audio em texto
@@ -44,8 +38,7 @@ class ComunicacaoEstagiario(object):
             return "Não entendi"
 
 
-# In[3]:
-
+# %%
 
 class ComandosEstagiario(object):
     __metaclass__ = ABCMeta
@@ -78,8 +71,7 @@ class ComandosEstagiario(object):
             print(KeyError)
 
 
-# In[4]:
-
+# %%
 
 class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
 
@@ -88,9 +80,11 @@ class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
         self._microfone = microfone
 
     def interface(self):
-        frase = self.ouvir_microfone('Chame o Estagiário para começar') if self._microfone                else input('\nChamar: ')
+        frase = self.ouvir_microfone('Chame o Estagiário para começar') if self._microfone \
+            else input('\nChamar: ')
         if 'estagiário' in frase:
-            frase = self.ouvir_microfone('Oque devo fazer?') if self._microfone                    else input('\nOque deve fazer: ')
+            frase = self.ouvir_microfone('Oque devo fazer?') if self._microfone \
+                else input('\nOque deve fazer: ')
             print(frase)
             print(self._executa_comando(frase))
             self.interface()
@@ -103,25 +97,19 @@ class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
             dic = arquivo.read()
             dic = eval(dic)
         return dic
-    
+
     @property
     def lista_de_comandos(self):
         return self._lista_de_comandos
-    
-   
 
 
-# In[5]:
-
+# %%
 
 if __name__ == '__main__':
     print('Iniciando estagiário')
-    e = Estagiario(microfone=False)
+    e = Estagiario(microfone=True)
     e.interface()
 
-
-
-
-
+# %%
 
 
