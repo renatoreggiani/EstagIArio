@@ -1,12 +1,19 @@
-# %%
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Aug 13 00:54:31 2020
 
-# @autor Gustavo Moss /Renato Regianne
+@author: Gustavo Moss /Renato Regianne
+"""
+
+# %%
 import speech_recognition as sr
 from gtts import gTTS
 from playsound import playsound
 import habilidades as hab
 from abc import ABCMeta, abstractmethod
 from Interpretador import identifica_comando
+import json
 
 
 #%%
@@ -93,9 +100,8 @@ class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
             self.interface()
 
     def _manipula_lista_de_comandos(self):
-        with open('listaDeHabilidades.txt', 'r') as arquivo:
-            dic = arquivo.read()
-            dic = eval(dic)
+        with open('listaDeHabilidades.json','r') as arquivo:
+            dic= json.load(arquivo)
         return dic
 
     @property
@@ -107,7 +113,7 @@ class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
 
 if __name__ == '__main__':
     print('Iniciando estagiário')
-    e = Estagiario(microfone=True)
+    e = Estagiario(microfone=False)
     e.interface()
 
 #%%
