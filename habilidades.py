@@ -4,9 +4,9 @@ def som_cont():
 
 def faz_pesquis():
     from wikipedia import set_lang,summary
-    wk.set_lang('pt')
+    set_lang('pt')
     info=input('Oque desejas pesquisar mestre?\n')
-    return wk.summary(info,sentences=2)
+    return summary(info,sentences=2)
 
 def abr_sit():
     from webbrowser import open
@@ -16,15 +16,12 @@ def abr_sit():
 def final_sistem():
     import sys
     return sys.exit()
-
+ 
 def list_com():
-    '''Exibi '''
-    with open('listaDeHabilidades.txt','r') as arquivo:
-        dic=arquivo.read()
-        dic=eval(dic)
-
-    for valor in dic.values():
-        desc = valor.split('-')
-        print(f'Comando: {desc[0]}\n - descrição:{desc[1]}')
-#%%
-
+    import json
+    with open('listaDeHabilidades.json','r') as arquivo:
+        teste= json.load(arquivo)
+        for valor in teste:
+            print(f'Comando: {valor}\ndescrição:{teste[valor]}')
+            print('--------------')
+            
