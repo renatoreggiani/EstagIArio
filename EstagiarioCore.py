@@ -28,7 +28,7 @@ class ComunicacaoEstagiario(object):
         # Da play ao audio
         playsound('/home/moss/IA/teste.mp3')  # corrigir
 
-    def ouvir_microfone(self, texto_de_espera):
+    def ouvir_microfone(self, texto_de_espera:str)-> str:
         """Funcao responsavel por ouvir e reconhecer a fala"""
         microfone = sr.Recognizer()  # Habilita o microfone para ouvir o usuario
         with sr.Microphone() as source:
@@ -51,20 +51,20 @@ class ComandosEstagiario(object):
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def _lista_de_comandos(self):
+    def _lista_de_comandos(self)-> None:
         pass
 
-    def __seleciona_comando(self, comando):
+    def __seleciona_comando(self, comando:str)-> bool:
         comandos = self.lista_de_comandos
         if comando in comandos.keys():
             return True
 
     @staticmethod
-    def __identifica_comando(frase):
+    def __identifica_comando(frase:str)-> str:
         cmd = identifica_comando(frase)
         return cmd
 
-    def _executa_comando(self, voz):
+    def _executa_comando(self, voz:str):
         comando = ComandosEstagiario.__identifica_comando(voz)
         try:
             comando = comando['acao_rad'] + '_' + comando['complem_rad']
@@ -83,10 +83,10 @@ class ComandosEstagiario(object):
 class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
 
     def __init__(self, microfone=True):
-        self._lista_de_comandos = self._manipula_lista_de_comandos()
-        self._microfone = microfone
+        self._lista_de_comandos:dict = self.__manipula_lista_de_comandos()
+        self._microfone:bool = microfone
 
-    def interface(self):
+    def interface(self)-> None:
         frase = self.ouvir_microfone('Chame o Estagiário para começar') if self._microfone \
             else input('\nChamar: ')
         if 'estagiário' in frase:
@@ -99,13 +99,13 @@ class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
             print('estou dormindo', ' ' * 20, end='\r', flush=True)
             self.interface()
 
-    def _manipula_lista_de_comandos(self):
+    def __manipula_lista_de_comandos(self)-> dict:
         with open('listaDeHabilidades.json','r') as arquivo:
             dic= json.load(arquivo)
         return dic
 
     @property
-    def lista_de_comandos(self):
+    def lista_de_comandos(self)-> dict:
         return self._lista_de_comandos
 
 
@@ -117,5 +117,3 @@ if __name__ == '__main__':
     e.interface()
 
 #%%
-
-
