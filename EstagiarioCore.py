@@ -121,5 +121,5 @@ if __name__ == '__main__':
     e = Estagiario(microfone=False)
     # e.interface()
     frase, dic = e.treino()
-#%%
-def Cri
+
+

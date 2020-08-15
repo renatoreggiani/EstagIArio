@@ -16,7 +16,11 @@ def abr_sit():
 def final_sistem():
     import sys
     return sys.exit()
- 
+
+def abr_googl():
+    from webbrowser import open
+    return open("https://www.google.com", new=2)
+
 def list_com():
     import json
     with open('listaDeHabilidades.json','r') as arquivo:
