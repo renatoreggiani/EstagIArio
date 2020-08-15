@@ -4,11 +4,15 @@ import sys
 
 
 def som_cont():
+    '''Comando: Somar conta,
+    Funcao: soma 1+1'''
     x = 1 + 1
     return x
 
 
 def faz_pesquis():
+    '''Comando: Fazer pesquisa,
+    Funcao: Abre o wikipedia com pesquisa digitada no input'''
     from wikipedia import set_lang, summary
     set_lang('pt')
     info = input('Oque desejas pesquisar mestre?\n')
@@ -16,17 +20,22 @@ def faz_pesquis():
 
 
 def abr_sit():
+    '''Comando: Abir site,
+    Funcao: Abre o site digitado no input'''
     from webbrowser import open
     site = input('Qual site você gostaria de abrir mestre:')
     return open(f"https://www.{site}.com", new=2)
 
 
 def final_sistem():
+    '''Comando: Finalizar sistema,
+    Funcao: encerra a execucao do EstagIArio'''
     return sys.exit()
 
 
 def abr_googl():
-    '''Abre o google no nagevador padrao'''
+    '''Comando: Abir google,
+    Funcao: Abre o google no nagevador padrao'''
     from webbrowser import open
     return open("https://www.google.com", new=2)
 
@@ -40,6 +49,8 @@ def list_com():
 
 
 def abr_excel():
+    '''Comando: Abir excel,
+    Funcao: inicia o excel'''
     os.system('start excel.exe')
 
 
