@@ -119,9 +119,6 @@ class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
 if __name__ == '__main__':
     print('Iniciando estagiário')
     e = Estagiario(microfone=False)
-    # e.interface()
-    frase, dic = e.treino()
+    e.interface()
+    # frase, dic = e.treino()
 
-
-import habilidades
-dir(habilidades)
