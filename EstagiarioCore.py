@@ -60,7 +60,7 @@ class ComandosEstagiario(object):
             return True
 
     @staticmethod
-    def __identifica_comando(frase:str)-> str:
+    def __identifica_comando(frase:str)->str:
         cmd = identifica_comando(frase)
         return cmd
 
@@ -86,6 +86,10 @@ class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
         self._lista_de_comandos:dict = self.__manipula_lista_de_comandos()
         self._microfone:bool = microfone
 
+    @property
+    def lista_de_comandos(self)-> dict:
+        return self._lista_de_comandos
+
     def interface(self)-> None:
         frase = self.ouvir_microfone('Chame o Estagiário para começar') if self._microfone \
             else input('\nChamar: ')
@@ -104,9 +108,10 @@ class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
             dic= json.load(arquivo)
         return dic
 
-    @property
-    def lista_de_comandos(self)-> dict:
-        return self._lista_de_comandos
+    def treino(self):
+        frase = self.ouvir_microfone('Falar comando')
+        dic_comando = identifica_comando(frase)
+        return frase, dic_comando
 
 
 #%%
@@ -114,6 +119,7 @@ class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
 if __name__ == '__main__':
     print('Iniciando estagiário')
     e = Estagiario(microfone=False)
-    e.interface()
-
+    # e.interface()
+    frase, dic = e.treino()
 #%%
+def Cri
