@@ -123,3 +123,5 @@ if __name__ == '__main__':
     frase, dic = e.treino()
 
 
+import habilidades
+dir(habilidades)
