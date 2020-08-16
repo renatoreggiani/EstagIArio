@@ -32,9 +32,10 @@ class ComunicacaoEstagiario(object):
         """Funcao responsavel por ouvir e reconhecer a fala"""
         microfone = sr.Recognizer()  # Habilita o microfone para ouvir o usuario
         with sr.Microphone() as source:
-            microfone.adjust_for_ambient_noise(source)  # Chama a funcao de reducao de ruido
+            # microfone.adjust_for_ambient_noise(source)  # Chama a funcao de reducao de ruido
+
             print(texto_de_espera, ' ' * 20, end='\r', flush=True)
-            microfone.pause_threshold = 2.5
+            microfone.pause_threshold = 1
             audio = microfone.listen(source, timeout=None)  # Armazena a informacao de audio na variavel
         try:
             texto = microfone.recognize_google(audio, language='pt-BR')  # Transforma audio em texto
@@ -118,7 +119,10 @@ class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
 
 if __name__ == '__main__':
     print('Iniciando estagiário')
-    e = Estagiario(microfone=False)
+    e = Estagiario(microfone=True)
     e.interface()
     # frase, dic = e.treino()
+
+
+#%%
 
