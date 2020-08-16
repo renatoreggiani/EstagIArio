@@ -74,7 +74,7 @@ class ComandosEstagiario(object):
             else:
                 # vai ter uma funcao pra ele falar(audio)
                 print('desculpe mestre eu nao sei fazer isso,sei fazer apenas isso:\n')
-                return hab.list_com()
+                return help(hab)
         except KeyError:
             print(KeyError)
 
@@ -119,7 +119,7 @@ class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
 
 if __name__ == '__main__':
     print('Iniciando estagiário')
-    e = Estagiario(microfone=True)
+    e = Estagiario(microfone=False)
     e.interface()
     # frase, dic = e.treino()
 
