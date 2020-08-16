@@ -69,7 +69,7 @@ class ComandosEstagiario(object):
         comando = ComandosEstagiario.__identifica_comando(voz)
         try:
             comando = comando['acao_rad'] + '_' + comando['complem_rad']
-            if self.__seleciona_comando(comando):
+            if comando in dir(hab):
                 return eval(f'hab.{comando}()')
             else:
                 # vai ter uma funcao pra ele falar(audio)
