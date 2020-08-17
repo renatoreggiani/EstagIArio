@@ -1,7 +1,10 @@
 import json
 import os
 import sys
-
+import wolframalpha
+import wikipedia
+import requests
+from bs4 import BeautifulSoup
 
 def som_cont():
     '''Comando: Somar conta,
@@ -53,4 +56,35 @@ def abr_excel():
     Funcao: inicia o excel'''
     os.system('start excel.exe')
 
+
+def busca(frase):
+    client = wolframalpha.Client('Your_App_ID')
+    try:
+        try:
+            res = client.query(frase)
+            results = next(res.results).text
+            print('WOLFRAM-ALPHA says - ')
+            return results
+
+        except:
+            results = wikipedia.summary(frase, sentences=2)
+            print('WIKIPEDIA says - ')
+            return results
+
+    except:
+        return False
+
+
+def busca_google(frase):
+
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36'}
+    r = requests.get('https://www.google.com/search?&q='+frase, headers=headers)
+    soup = BeautifulSoup(r.text, 'lxml')
+    classes_google = ['vk_c card-section',
+                        'webanswers-webanswers_table__webanswers-table',
+                        'aviV4d']
+    resp = [(classe, soup.find('div', class_=classe)) for classe in classes_google
+            if soup.find('div', class_=classe) is not None]
+    if resp:
+        return resp[0][1].text
 
