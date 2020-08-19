@@ -19,7 +19,12 @@ import json
 #%%
 
 class ComunicacaoEstagiario(object):
-    
+    def __init__(self):
+        self.r = sr.Recognizer()
+        with sr.Microphone() as source:
+            self.r.adjust_for_ambient_noise(source, 4)
+        self.threshold = self.r.energy_threshold * 1.5
+
     def cria_audio(audio):
         tts = gTTS(audio, lang='pt-br')
         # Salva o arquivo de audio
@@ -30,15 +35,13 @@ class ComunicacaoEstagiario(object):
 
     def ouvir_microfone(self, texto_de_espera:str)-> str:
         """Funcao responsavel por ouvir e reconhecer a fala"""
-        microfone = sr.Recognizer()  # Habilita o microfone para ouvir o usuario
         with sr.Microphone() as source:
-            # microfone.adjust_for_ambient_noise(source)  # Chama a funcao de reducao de ruido
-            microfone.energy_threshold=3000
+            self.r.energy_threshold = self.threshold
+            self.r.pause_threshold = 1
             print(texto_de_espera, ' ' * 20, end='\n', flush=True)
-            microfone.pause_threshold =0.8
-            audio = microfone.listen(source, timeout=None)  # Armazena a informacao de audio na variavel
+            audio =  self.r.listen(source, timeout=None)  # Armazena a informacao de audio na variavel
         try:
-            texto = microfone.recognize_google(audio, language='pt-BR')  # Transforma audio em texto
+            texto = self.r.recognize_google(audio, language='pt-BR')  # Transforma audio em texto
             print("Você disse: " + texto, ' ' * 20, end='\n', flush=True)
             return texto.lower()
         # Caso nao tenha reconhecido o padrao de fala, exibe esta mensagem
@@ -84,6 +87,7 @@ class ComandosEstagiario(object):
 class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
 
     def __init__(self, microfone=True):
+        super().__init__()
         self._lista_de_comandos:dict = self.__manipula_lista_de_comandos()
         self._microfone:bool = microfone
         

@@ -5,7 +5,6 @@ import wolframalpha
 import wikipedia
 import requests
 from bs4 import BeautifulSoup
-from deprecated import deprecated
 
 
 def som_cont():
@@ -45,7 +44,6 @@ def abr_googl():
     return open("https://www.google.com", new=2)
 
 
-@deprecated
 def list_com():
     with open('listaDeHabilidades.json', 'r') as arquivo:
         teste = json.load(arquivo)
