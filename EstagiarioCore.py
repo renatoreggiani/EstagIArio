@@ -22,6 +22,7 @@ class ComunicacaoEstagiario(object):
     def __init__(self):
         self.r = sr.Recognizer()
         with sr.Microphone() as source:
+            print('Silencio!!!')
             self.r.adjust_for_ambient_noise(source, 4)
         self.threshold = self.r.energy_threshold * 1.5
 

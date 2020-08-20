@@ -1,8 +1,8 @@
 import json
 import os
 import sys
-import wolframalpha
-import wikipedia
+# import wolframalpha
+# import wikipedia
 import requests
 from bs4 import BeautifulSoup
 
@@ -73,20 +73,20 @@ class AppsIA():
             if resp[0][1].text.strip().startswith('Resultado da calculadora'):
                 return resp[0][1].text[resp[0][1].text.find('='):].split()[1]
 
-    def wolfram(frase):
-        client = wolframalpha.Client('Your_App_ID')
-        try:
-            res = client.query(frase)
-            results = next(res.results).text
-            print('WOLFRAM-ALPHA says - ')
-            return results
-        except:
-            return False
-
-    def wikipedia(frase):
-        results = wikipedia.summary(frase, sentences=2)
-        print('WIKIPEDIA says - ')
-        return results
+    # def wolfram(frase):
+    #     client = wolframalpha.Client('Your_App_ID')
+    #     try:
+    #         res = client.query(frase)
+    #         results = next(res.results).text
+    #         print('WOLFRAM-ALPHA says - ')
+    #         return results
+    #     except:
+    #         return False
+    #
+    # def wikipedia(frase):
+    #     results = wikipedia.summary(frase, sentences=2)
+    #     print('WIKIPEDIA says - ')
+    #     return results
 
 
 
