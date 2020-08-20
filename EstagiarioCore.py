@@ -27,11 +27,9 @@ class ComunicacaoEstagiario(object):
 
     def cria_audio(audio):
         tts = gTTS(audio, lang='pt-br')
-        # Salva o arquivo de audio
-        tts.save('/home/moss/IA/teste.mp3')  # corrigir
+        tts.save('/home/moss/IA/teste.mp3')  # Salva o arquivo de audio
         print("sim mestre")
-        # Da play ao audio
-        playsound('/home/moss/IA/teste.mp3')  # corrigir
+        playsound('/home/moss/IA/teste.mp3')  # Da play ao audio
 
     def ouvir_microfone(self, texto_de_espera:str)-> str:
         """Funcao responsavel por ouvir e reconhecer a fala"""
@@ -39,7 +37,7 @@ class ComunicacaoEstagiario(object):
             self.r.energy_threshold = self.threshold
             self.r.pause_threshold = 1
             print(texto_de_espera, ' ' * 20, end='\n', flush=True)
-            audio =  self.r.listen(source, timeout=None)  # Armazena a informacao de audio na variavel
+            audio = self.r.listen(source, timeout=None)  # Armazena a informacao de audio na variavel
         try:
             texto = self.r.recognize_google(audio, language='pt-BR')  # Transforma audio em texto
             print("Você disse: " + texto, ' ' * 20, end='\n', flush=True)
@@ -68,18 +66,22 @@ class ComandosEstagiario(object):
         cmd = identifica_comando(frase)
         return cmd
 
-    def _executa_comando(self, voz:str):
+    def _executa_comando(self, voz):
         comando = ComandosEstagiario.__identifica_comando(voz)
         try:
             comando = comando['acao_rad'] + '_' + comando['complem_rad']
             if comando in dir(hab):
                 return eval(f'hab.{comando}()')
             else:
+                resposta_app_IA = hab.AppsIA.google(voz)
+                if resposta_app_IA:
+                    return resposta_app_IA
                 # vai ter uma funcao pra ele falar(audio)
                 print('desculpe mestre eu nao sei fazer isso,sei fazer apenas isso:\n')
                 return help(hab)
         except KeyError:
-            print(KeyError)
+            resposta_app_IA = hab.AppsIA.google(voz)
+            return resposta_app_IA if resposta_app_IA else print('Nao sei fazer isso :(  !!!!')
 
 
 #%%
@@ -96,12 +98,11 @@ class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
         return self._lista_de_comandos
 
     def interface(self)-> None:
-        frase = self.ouvir_microfone('Chame o Estagiário para começar') if self._microfone \
+        frase = self.ouvir_microfone('Chame o Estagiário') if self._microfone \
             else input('\nChamar: ')
         if 'estagiário' in frase:
             frase = self.ouvir_microfone('Oque devo fazer?') if self._microfone \
-                else input('\nOque deve fazer: ')
-            #print(frase)
+                    else input('\nOque deve fazer: ')
             print(self._executa_comando(frase))
             self.interface()
         else:
@@ -127,5 +128,3 @@ if __name__ == '__main__':
     e.interface()
     # frase, dic = e.treino()
 
-
-#%%
