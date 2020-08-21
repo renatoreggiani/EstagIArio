@@ -24,7 +24,8 @@ class ComunicacaoEstagiario(object):
         with sr.Microphone() as source:
             print('Silencio!!!')
             self.r.adjust_for_ambient_noise(source, 4)
-        self.threshold = self.r.energy_threshold * 1.5
+        self.threshold = self.r.energy_threshold * 1.2
+        self.r.dynamic_energy_threshold = False
 
     def cria_audio(audio):
         tts = gTTS(audio, lang='pt-br')
@@ -37,11 +38,11 @@ class ComunicacaoEstagiario(object):
         with sr.Microphone() as source:
             self.r.energy_threshold = self.threshold
             self.r.pause_threshold = 1
-            print(texto_de_espera, ' ' * 20, end='\n', flush=True)
+            print(texto_de_espera, ' ' * 20, end=' ', flush=True)
             audio = self.r.listen(source, timeout=None)  # Armazena a informacao de audio na variavel
         try:
             texto = self.r.recognize_google(audio, language='pt-BR')  # Transforma audio em texto
-            print("Você disse: " + texto, ' ' * 20, end='\n', flush=True)
+            print("\rVocê disse: " + texto, ' ' * 20, end='\n', flush=True)
             return texto.lower()
         # Caso nao tenha reconhecido o padrao de fala, exibe esta mensagem
         except sr.UnknownValueError:
@@ -99,15 +100,15 @@ class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
         return self._lista_de_comandos
 
     def interface(self)-> None:
-        frase = self.ouvir_microfone('Chame o Estagiário') if self._microfone \
+        frase = self.ouvir_microfone('\rChame o Estagiário') if self._microfone \
             else input('\nChamar: ')
         if 'estagiário' in frase:
-            frase = self.ouvir_microfone('Oque devo fazer?') if self._microfone \
+            frase = self.ouvir_microfone('\rOque devo fazer?') if self._microfone \
                     else input('\nOque deve fazer: ')
             print(self._executa_comando(frase))
             self.interface()
         else:
-            print('estou dormindo', ' ' * 20, end='\n', flush=True)
+            print('\restou dormindo', ' ' * 40, end=' ', flush=True)
             self.interface()
 
     def __manipula_lista_de_comandos(self)-> dict:
@@ -128,4 +129,7 @@ if __name__ == '__main__':
     e = Estagiario(microfone=True)
     e.interface()
     # frase, dic = e.treino()
+
+
+#%%
 

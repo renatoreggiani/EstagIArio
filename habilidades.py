@@ -7,13 +7,6 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def som_cont():
-    '''Comando: Somar conta,
-    Funcao: soma 1+1'''
-    x = 1 + 1
-    return x
-
-
 def faz_pesquis():
     '''Comando: Fazer pesquisa,
     Funcao: Abre o wikipedia com pesquisa digitada no input'''
