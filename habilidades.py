@@ -7,6 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
+
 def faz_pesquis():
     '''Comando: Fazer pesquisa,
     Funcao: Abre o wikipedia com pesquisa digitada no input'''

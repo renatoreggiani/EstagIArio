@@ -1,8 +1,29 @@
-{"som_cont":"somar conta - soma dois numeros",
-"faz_pesquis":"pesquisa oque voce quer",
-"abr_sit":"abrir site - abre um site",
-"final_sistem":"finalizar sistema - finaliza o estagiario",
-"list_com":"lista de comandos - exibi lista de comandos",
-"abr_sit":"abrir sites",
-  "abr_googl":"abre google"
+{
+  "faz_pesquis": {
+    "descricao": "pesquisa oque voce quer"
+  },
+  "abr_sit": {
+    "descricao": "abrir site - abre um site"
+  },
+  "final_sistem": {
+    "descricao": "finalizar sistema - finaliza o estagiario",
+    "audio": "audios/gloria adeux.mp3"
+  },
+  "list_com": {
+    "descricao": "lista de comandos - exibi lista de comandos"
+  },
+  "abr_sit": {
+    "descricao": "abrir sites"
+  },
+  "abr_googl": {
+    "descricao": "abre google",
+    "audio": "audios/abrindo google.mp3"
+  },
+  "oque fazer?": {
+    "audio": [
+      "audios/fala.mp3",
+      "audios/qfoi.mp3",
+      "audios/qq tu q mane.mp3"
+    ]
+  }
 }
