@@ -56,27 +56,27 @@ class ComunicacaoEstagiario(object):
 
 # %%
 
-class ComandosEstagiario(object):
-    __metaclass__ = ABCMeta
-
-    @abstractmethod
-    def _lista_de_comandos(self) -> None:
-        pass
-
-    def __seleciona_comando(self, comando: str) -> bool:
-        comandos = self.lista_de_comandos
-        if comando in comandos.keys():
-            return True
-
-    @staticmethod
-    def __identifica_comando(frase: str) -> str:
-        cmd = identifica_comando(frase)
-        return cmd
+# class ComandosEstagiario(object):
+#     __metaclass__ = ABCMeta
+#
+#     @abstractmethod
+#     def _lista_de_comandos(self) -> None:
+#         pass
+#
+#     def __seleciona_comando(self, comando: str) -> bool:
+#         comandos = self.lista_de_comandos
+#         if comando in comandos.keys():
+#             return True
+#
+#     @staticmethod
+#     def __identifica_comando(frase: str) -> str:
+#         cmd = identifica_comando(frase)
+#         return cmd
 
 
 # %%
 
-class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
+class Estagiario(ComunicacaoEstagiario):
 
     def __init__(self, microfone=True):
         super().__init__()
