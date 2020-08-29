@@ -21,15 +21,14 @@
   },
   "oque fazer?": {
     "audio": [
-      "audios/fala.mp3",
       "audios/qq tu q mane.mp3",
       "audios/chora.mp3"
     ]
   },
-  "inicialização": {
+  "inicializacao": {
     "audio": [
-      "audios/to boladão.mp3",
-      "audios/quale mane.mp3"
+      "audios/to boladao.mp3",
+      "audios/to aqui so chama.mp3"
     ]
   }
 }

@@ -30,7 +30,6 @@ class ComunicacaoEstagiario(object):
 
     def tocar_audio(self, audios):
         if type(audios) == list:
-            print("lista")
             audio = audios[randint(0, len(audios) - 1)]
         else:
             audio = audios
@@ -74,24 +73,6 @@ class ComandosEstagiario(object):
         cmd = identifica_comando(frase)
         return cmd
 
-    def _executa_comando(self, voz):
-        comando = ComandosEstagiario.__identifica_comando(voz)
-        try:
-            comando = comando['acao_rad'] + '_' + comando['complem_rad']
-            if comando in dir(hab):
-                eval(f'hab.{comando}()')
-                return comando
-            else:
-                resposta_app_IA = hab.AppsIA.google(voz)
-                if resposta_app_IA:
-                    return resposta_app_IA
-                # vai ter uma funcao pra ele falar(audio)
-                print('desculpe mestre eu nao sei fazer isso,sei fazer apenas isso:\n')
-                return help(hab)
-        except KeyError:
-            resposta_app_IA = hab.AppsIA.google(voz)
-            return resposta_app_IA if resposta_app_IA else print('Nao sei fazer isso :(  !!!!')
-
 
 # %%
 
@@ -99,15 +80,9 @@ class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
 
     def __init__(self, microfone=True):
         super().__init__()
-        self._lista_de_comandos = self.__manipula_lista_de_comandos
+        self._lista_de_comandos = json.load(open('listaDeHabilidades.json', 'r'))
         self._microfone = microfone
-        self.tocar_audio(self.audio_resposta('inicialização'))
-
-    @property
-    def __manipula_lista_de_comandos(self) -> dict:
-        with open('listaDeHabilidades.json', 'r') as arquivo:
-            dic = json.load(arquivo)
-        return dic
+        self.tocar_audio(self.audio_resposta('inicializacao'))
 
     def audio_resposta(self, cmd):
         try:
@@ -125,9 +100,7 @@ class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
             else:
                 input('\nOque deve fazer: ')
 
-            cmd = self._executa_comando(frase)
-            print(cmd)
-            if self._microfone: self.tocar_audio(cmd)
+            self._executa_comando(frase)
             self.interface()
         else:
             print('\restou dormindo', ' ' * 40, end=' ', flush=True)
@@ -138,9 +111,26 @@ class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
         dic_comando = identifica_comando(frase)
         return frase, dic_comando
 
+    def _executa_comando(self, voz):
+        comando = identifica_comando(voz)
+        try:
+            comando = comando['acao_rad'] + '_' + comando['complem_rad']
+            if comando in dir(hab):
+                if self._microfone: self.tocar_audio(self.audio_resposta(comando))
+                eval(f'hab.{comando}()')
+                return comando
+            else:
+                resposta_app_IA = hab.AppsIA.google(voz)
+                if resposta_app_IA:
+                    return resposta_app_IA
+                print('desculpe mestre eu nao sei fazer isso,sei fazer apenas isso:\n')
+                return help(hab)
+        except KeyError:
+            resposta_app_IA = hab.AppsIA.google(voz)
+            return resposta_app_IA if resposta_app_IA else print('Nao sei fazer isso :(  !!!!')
+
 
 # %%
-
 if __name__ == '__main__':
     print('Iniciando estagiário')
     e = Estagiario(microfone=True)
