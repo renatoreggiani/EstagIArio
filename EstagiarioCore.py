@@ -101,6 +101,7 @@ class Estagiario(ComandosEstagiario, ComunicacaoEstagiario):
         super().__init__()
         self._lista_de_comandos = self.__manipula_lista_de_comandos
         self._microfone = microfone
+        self.tocar_audio(self.audio_resposta('inicialização'))
 
     @property
     def __manipula_lista_de_comandos(self) -> dict:
