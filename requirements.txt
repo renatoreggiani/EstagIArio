@@ -55,7 +55,7 @@ prometheus-client==0.8.0
 prompt-toolkit==3.0.5
 #pt-core-news-sm @ https://github.com/explosion/spacy-models/releases/download/pt_core_news_sm-2.3.0/pt_core_news_sm-2.3.0.tar.gz
 #PyAudio @ file:///C:/Users/Renato/pipwin/PyAudio-0.2.11-cp38-cp38-win_amd64.whl
-Pygments==2.6.1
+Pygments==2.7.4
 pyjsparser==2.7.1
 pyparsing==2.4.7
 PyPrind==2.11.2
