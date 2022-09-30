@@ -27,7 +27,7 @@ ipywidgets==7.5.1
 jaraco.itertools==5.0.0
 #jedi @ file:///C:/ci/jedi_1592833825077/work
 Jinja2==2.11.2
-joblib==0.16.0
+joblib==1.2.0
 Js2Py==0.70
 jsonschema==3.2.0
 jupyter==1.0.0
